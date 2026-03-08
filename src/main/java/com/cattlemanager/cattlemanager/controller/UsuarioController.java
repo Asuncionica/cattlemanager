@@ -19,6 +19,10 @@ public class UsuarioController {
     public List<Usuario> obtenerUsuarios(){
         return usuarioService.obtenerUsuarios();
     }
+    @GetMapping("/{id}")
+    public Usuario obtenerUsuarioPorId(@PathVariable Long id) {
+        return usuarioService.obtenerUsuarioPorId(id);
+    }
 
     @PostMapping
     public Usuario crearUsuario(@RequestBody Usuario usuario){
@@ -33,6 +37,10 @@ public class UsuarioController {
     public Usuario actualizarUsuario(@PathVariable Long id,
                                  @RequestBody Usuario usuario) {
         return usuarioService.actualizarUsuario(id, usuario);
+    }
+    @PostMapping("/login")
+    public Usuario login(@RequestBody Usuario usuario){
+        return usuarioService.login(usuario.getEmail(), usuario.getPassword());
     }
 
 

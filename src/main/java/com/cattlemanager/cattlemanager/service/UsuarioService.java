@@ -18,6 +18,11 @@ public class UsuarioService {
     public List<Usuario> obtenerUsuarios() {
         return usuarioRepository.findAll();
     }
+    
+    public Usuario obtenerUsuarioPorId(Long id) {
+        return usuarioRepository.findById(id).orElse(null);
+    }
+
 
     public Usuario guardarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
@@ -34,6 +39,10 @@ public class UsuarioService {
         u.setRol(usuario.getRol());
         return usuarioRepository.save(u);
     }).orElse(null);
+    }
+    
+    public Usuario login(String email, String password) {
+        return usuarioRepository.findByEmailAndPassword(email, password);
     }
 }
 
