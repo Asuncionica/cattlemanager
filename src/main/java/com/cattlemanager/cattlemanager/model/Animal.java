@@ -1,5 +1,7 @@
 package com.cattlemanager.cattlemanager.model;
 
+
+
 import jakarta.persistence.*;
 
 @Entity
