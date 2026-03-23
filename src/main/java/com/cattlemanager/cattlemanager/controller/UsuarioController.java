@@ -3,7 +3,8 @@ package com.cattlemanager.cattlemanager.controller;
 import com.cattlemanager.cattlemanager.model.Usuario;
 import com.cattlemanager.cattlemanager.service.UsuarioService;
 import java.util.List;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.*;//Le estoy diciendo a Java:
+//“Quiero usar todas las clases y anotaciones que están dentro de este paquete.”
 
 @RestController
 @RequestMapping("/usuarios")

@@ -1,8 +1,11 @@
 package com.cattlemanager.cattlemanager.service;
 
-import com.cattlemanager.cattlemanager.model.Animal;//Modelo que representa un animal en la aplicación.
-import com.cattlemanager.cattlemanager.repository.AnimalRepository;//Interfaz que maneja la persistencia de los animales en la base de datos.
-import org.springframework.stereotype.Service;//Anotación de Spring que marca la clase como un servicio, parte de la lógica de negocio.
+import com.cattlemanager.cattlemanager.model.Animal;//Modelo que representa un 
+//animal en la aplicación.
+import com.cattlemanager.cattlemanager.repository.AnimalRepository;//Interfaz 
+//que maneja la persistencia de los animales en la base de datos.
+import org.springframework.stereotype.Service;//Anotación de Spring que marca 
+//la clase como un servicio, parte de la lógica de negocio.
 
 import java.util.List;//Colección de Java para manejar listas de objetos.
 

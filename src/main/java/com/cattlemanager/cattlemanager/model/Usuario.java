@@ -1,13 +1,17 @@
 package com.cattlemanager.cattlemanager.model;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+/*jakarta.persistence Es la librería que usa Spring Boot con JPA para conectar
+tu código con la base de datos.
+Sirven para decirle a Java:
+“Esta clase y estos campos se guardan en una base de datos, y así es como deben
+guardarse”*/
+import jakarta.persistence.Column;//configuar columnas.
+import jakarta.persistence.Entity;//Convertir clase en tabla.
+import jakarta.persistence.GeneratedValue;//Id automático
+import jakarta.persistence.GenerationType;//Cómo se genera el Id.
+import jakarta.persistence.Id;//Clave primaria
+import jakarta.persistence.JoinColumn;//Columna de relación
+import jakarta.persistence.ManyToOne;//Relación muchos a uno
+import jakarta.persistence.Table;//Nombrar la tabla
 
 @Entity
 @Table(name = "usuario")
