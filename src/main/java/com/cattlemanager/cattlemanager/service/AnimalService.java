@@ -29,6 +29,9 @@ public class AnimalService {
         //Retorna una lista de todos los animales almacenados en la base de datos.
         //Usa findAll() de JpaRepository.
     }
+    public Animal obtenerAnimalPorId(Long id) {
+        return animalRepository.findById(id).orElse(null);
+    }
 
     public Animal guardarAnimal(Animal animal) {
         return animalRepository.save(animal);

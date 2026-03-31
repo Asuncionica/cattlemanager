@@ -33,6 +33,11 @@ public class AnimalController {
     public List<Animal> obtenerAnimales() {
         return animalService.obtenerAnimales();
     }
+    
+    @GetMapping("/{id}")
+    public Animal obtenerAnimalPorId(@PathVariable Long id) {
+        return animalService.obtenerAnimalPorId(id);
+    }
     /**
      * Endpoint para crear un nuevo animal.
      * HTTP POST /animales
