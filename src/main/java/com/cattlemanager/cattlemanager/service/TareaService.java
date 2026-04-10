@@ -1,0 +1,48 @@
+package com.cattlemanager.cattlemanager.service;
+
+import com.cattlemanager.cattlemanager.model.Tarea;
+import com.cattlemanager.cattlemanager.repository.TareaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TareaService {
+
+    private final TareaRepository tareaRepository;
+
+    public TareaService(TareaRepository tareaRepository) {
+        this.tareaRepository = tareaRepository;
+    }
+
+    public Page<Tarea> obtenerTareas(Pageable pageable) {
+        return tareaRepository.findAll(pageable);
+    }
+
+    public Page<Tarea> obtenerPorGranja(Long granjaId, Pageable pageable) {
+        return tareaRepository.findByGranjaId(granjaId, pageable);
+    }
+
+    // Filtra por granja y estado: útil para mostrar solo pendientes o solo completadas
+    public Page<Tarea> obtenerPorGranjaYEstado(Long granjaId, boolean completada, Pageable pageable) {
+        return tareaRepository.findByGranjaIdAndCompletada(granjaId, completada, pageable);
+    }
+
+    public Tarea guardar(Tarea tarea) {
+        return tareaRepository.save(tarea);
+    }
+
+    public Tarea actualizar(Long id, Tarea tareaActualizada) {
+        Tarea tarea = tareaRepository.findById(id).orElseThrow();
+        tarea.setTitulo(tareaActualizada.getTitulo());
+        tarea.setDescripcion(tareaActualizada.getDescripcion());
+        tarea.setFechaVencimiento(tareaActualizada.getFechaVencimiento());
+        tarea.setCompletada(tareaActualizada.isCompletada());
+        tarea.setGranja(tareaActualizada.getGranja());
+        return tareaRepository.save(tarea);
+    }
+
+    public void eliminar(Long id) {
+        tareaRepository.deleteById(id);
+    }
+}

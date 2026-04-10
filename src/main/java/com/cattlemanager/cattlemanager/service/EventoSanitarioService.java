@@ -2,9 +2,9 @@ package com.cattlemanager.cattlemanager.service;
 
 import com.cattlemanager.cattlemanager.model.EventoSanitario;
 import com.cattlemanager.cattlemanager.repository.EventoSanitarioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class EventoSanitarioService {
@@ -15,8 +15,12 @@ public class EventoSanitarioService {
         this.repository = repository;
     }
 
-    public List<EventoSanitario> obtenerEventos() {
-        return repository.findAll();
+    public Page<EventoSanitario> obtenerEventos(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    public Page<EventoSanitario> obtenerPorAnimal(Long animalId, Pageable pageable) {
+        return repository.findByAnimalId(animalId, pageable);
     }
 
     public EventoSanitario guardarEvento(EventoSanitario evento) {
@@ -25,12 +29,10 @@ public class EventoSanitarioService {
 
     public EventoSanitario actualizarEvento(Long id, EventoSanitario eventoActualizado) {
         EventoSanitario evento = repository.findById(id).orElseThrow();
-
         evento.setTipo(eventoActualizado.getTipo());
         evento.setDescripcion(eventoActualizado.getDescripcion());
         evento.setFecha(eventoActualizado.getFecha());
         evento.setAnimal(eventoActualizado.getAnimal());
-
         return repository.save(evento);
     }
 
@@ -38,4 +40,3 @@ public class EventoSanitarioService {
         repository.deleteById(id);
     }
 }
-

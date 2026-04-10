@@ -2,9 +2,10 @@ package com.cattlemanager.cattlemanager.controller;
 
 import com.cattlemanager.cattlemanager.model.Animal;
 import com.cattlemanager.cattlemanager.service.AnimalService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/animales")
@@ -17,8 +18,15 @@ public class AnimalController {
     }
 
     @GetMapping
-    public List<Animal> obtenerAnimales() {
-        return animalService.obtenerAnimales();
+    public Page<Animal> obtenerAnimales(@PageableDefault(size = 20) Pageable pageable) {
+        return animalService.obtenerAnimales(pageable);
+    }
+
+    // Carga los animales de una granja: sustituye el id hardcodeado en Android
+    @GetMapping("/granja/{granjaId}")
+    public Page<Animal> obtenerPorGranja(@PathVariable Long granjaId,
+                                         @PageableDefault(size = 20) Pageable pageable) {
+        return animalService.obtenerPorGranja(granjaId, pageable);
     }
 
     @PostMapping
@@ -32,9 +40,7 @@ public class AnimalController {
     }
 
     @PutMapping("/{id}")
-    public Animal actualizarAnimal(@PathVariable Long id,
-                                   @RequestBody Animal animal) {
+    public Animal actualizarAnimal(@PathVariable Long id, @RequestBody Animal animal) {
         return animalService.actualizarAnimal(id, animal);
     }
 }
-

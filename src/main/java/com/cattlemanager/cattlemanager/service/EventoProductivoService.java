@@ -2,9 +2,9 @@ package com.cattlemanager.cattlemanager.service;
 
 import com.cattlemanager.cattlemanager.model.EventoProductivo;
 import com.cattlemanager.cattlemanager.repository.EventoProductivoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class EventoProductivoService {
@@ -15,8 +15,12 @@ public class EventoProductivoService {
         this.repository = repository;
     }
 
-    public List<EventoProductivo> obtenerEventos() {
-        return repository.findAll();
+    public Page<EventoProductivo> obtenerEventos(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    public Page<EventoProductivo> obtenerPorAnimal(Long animalId, Pageable pageable) {
+        return repository.findByAnimalId(animalId, pageable);
     }
 
     public EventoProductivo guardarEvento(EventoProductivo evento) {
@@ -27,4 +31,3 @@ public class EventoProductivoService {
         repository.deleteById(id);
     }
 }
-

@@ -2,9 +2,9 @@ package com.cattlemanager.cattlemanager.service;
 
 import com.cattlemanager.cattlemanager.model.Animal;
 import com.cattlemanager.cattlemanager.repository.AnimalRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AnimalService {
@@ -15,8 +15,13 @@ public class AnimalService {
         this.animalRepository = animalRepository;
     }
 
-    public List<Animal> obtenerAnimales() {
-        return animalRepository.findAll();
+    public Page<Animal> obtenerAnimales(Pageable pageable) {
+        return animalRepository.findAll(pageable);
+    }
+
+    // Filtra por granja; reemplaza el hardcode de granja_id=1 en Android
+    public Page<Animal> obtenerPorGranja(Long granjaId, Pageable pageable) {
+        return animalRepository.findByGranjaId(granjaId, pageable);
     }
 
     public Animal guardarAnimal(Animal animal) {
@@ -29,13 +34,11 @@ public class AnimalService {
 
     public Animal actualizarAnimal(Long id, Animal animalActualizado) {
         Animal animal = animalRepository.findById(id).orElseThrow();
-
         animal.setIdentificador(animalActualizado.getIdentificador());
         animal.setRaza(animalActualizado.getRaza());
         animal.setSexo(animalActualizado.getSexo());
         animal.setFechaNacimiento(animalActualizado.getFechaNacimiento());
         animal.setGranja(animalActualizado.getGranja());
-
         return animalRepository.save(animal);
     }
 }

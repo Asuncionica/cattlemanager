@@ -2,9 +2,10 @@ package com.cattlemanager.cattlemanager.controller;
 
 import com.cattlemanager.cattlemanager.model.EventoSanitario;
 import com.cattlemanager.cattlemanager.service.EventoSanitarioService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/eventos-sanitarios")
@@ -17,8 +18,15 @@ public class EventoSanitarioController {
     }
 
     @GetMapping
-    public List<EventoSanitario> listar() {
-        return service.obtenerEventos();
+    public Page<EventoSanitario> listar(@PageableDefault(size = 20) Pageable pageable) {
+        return service.obtenerEventos(pageable);
+    }
+
+    // Historial sanitario (vacunas, desparasitaciones…) de un animal concreto
+    @GetMapping("/animal/{animalId}")
+    public Page<EventoSanitario> listarPorAnimal(@PathVariable Long animalId,
+                                                 @PageableDefault(size = 20) Pageable pageable) {
+        return service.obtenerPorAnimal(animalId, pageable);
     }
 
     @PostMapping
@@ -27,8 +35,7 @@ public class EventoSanitarioController {
     }
 
     @PutMapping("/{id}")
-    public EventoSanitario actualizar(@PathVariable Long id,
-                                      @RequestBody EventoSanitario evento) {
+    public EventoSanitario actualizar(@PathVariable Long id, @RequestBody EventoSanitario evento) {
         return service.actualizarEvento(id, evento);
     }
 

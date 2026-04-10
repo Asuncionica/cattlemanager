@@ -11,16 +11,4 @@ public class CattlemanagerApplication {
 	}
 
 }
-/*@SpringBootApplication
-Esta anotación hace tres cosas importantes automáticamente:
 
-Configura Spring Boot automáticamente (auto-configuración).
-
-Busca componentes de Spring en el proyecto.
-
-Activa la configuración de Spring.
-
-En resumen:
-
-👉 Le dice a Spring:
-"Aquí empieza mi aplicación, configura todo lo necesario."*/

@@ -2,9 +2,9 @@ package com.cattlemanager.cattlemanager.service;
 
 import com.cattlemanager.cattlemanager.model.Rol;
 import com.cattlemanager.cattlemanager.repository.RolRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class RolService {
@@ -15,8 +15,8 @@ public class RolService {
         this.rolRepository = rolRepository;
     }
 
-    public List<Rol> obtenerRoles() {
-        return rolRepository.findAll();
+    public Page<Rol> obtenerRoles(Pageable pageable) {
+        return rolRepository.findAll(pageable);
     }
 
     public Rol obtenerPorId(Long id) {
@@ -36,4 +36,3 @@ public class RolService {
         return rolRepository.save(rol);
     }
 }
-

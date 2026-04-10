@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Usuario findByEmailAndPassword(String email, String password);
+    // BCrypt no permite buscar por password en BD; se busca por email y se compara el hash en el servicio
+    Usuario findByEmail(String email);
 }
 
