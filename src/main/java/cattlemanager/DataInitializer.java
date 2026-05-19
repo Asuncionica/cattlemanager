@@ -5,8 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-// Al arrancar el backend, convierte a BCrypt cualquier contraseña en texto plano
-// (detecta que no empieza por $2a$, que es el prefijo de BCrypt)
+// Al arrancar el backend, convierte a BCrypt cualquier contraseña en texto plano.
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -22,10 +21,14 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         usuarioRepository.findAll().forEach(u -> {
-            if (u.getPassword() == null || !u.getPassword().startsWith("$2a$")) {
+            if (u.getPassword() != null && !esHashBCrypt(u.getPassword())) {
                 u.setPassword(passwordEncoder.encode(u.getPassword()));
                 usuarioRepository.save(u);
             }
         });
+    }
+
+    private boolean esHashBCrypt(String password) {
+        return password.matches("^\\$2[aby]\\$\\d{2}\\$.{53}$");
     }
 }

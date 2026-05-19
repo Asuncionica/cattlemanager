@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -29,13 +30,18 @@ public class JwtFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         // Solo procesa si el header tiene formato "Bearer <token>"
-        if (header != null && header.startsWith("Bearer ")) {
+        if (header != null && header.startsWith("Bearer ")
+                && SecurityContextHolder.getContext().getAuthentication() == null) {
             String token = header.substring(7);
             if (jwtUtil.esValido(token)) {
                 String email = jwtUtil.extraerEmail(token);
+                String role = jwtUtil.extraerRol(token);
+                List<SimpleGrantedAuthority> authorities = role != null
+                        ? List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        : List.of();
                 // Autentica la petición sin volver a consultar la BD
                 UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(email, null, List.of());
+                        new UsernamePasswordAuthenticationToken(email, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }

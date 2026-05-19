@@ -56,7 +56,11 @@ public class UsuarioController {
         }
         // Devuelve el token y datos básicos del usuario (nunca la contraseña)
         Map<String, Object> respuesta = new HashMap<>();
-        respuesta.put("token", jwtUtil.generarToken(autenticado.getEmail(), autenticado.getId()));
+        respuesta.put("token", jwtUtil.generarToken(
+                autenticado.getEmail(),
+                autenticado.getId(),
+                autenticado.getRol() != null ? autenticado.getRol().getNombre() : null
+        ));
         respuesta.put("id", autenticado.getId());
         respuesta.put("nombre", autenticado.getNombre());
         respuesta.put("email", autenticado.getEmail());

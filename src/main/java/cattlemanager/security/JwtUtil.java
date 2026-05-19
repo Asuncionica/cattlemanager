@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.text.Normalizer;
+import java.util.Locale;
 
 @Component
 public class JwtUtil {
@@ -25,14 +27,15 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
-    // Genera un token con el email como subject y el id de usuario como claim
-    public String generarToken(String email, Long userId) {
+    // Genera un token con el email como subject, el id de usuario y el rol como claims
+    public String generarToken(String email, Long userId, String role) {
         return Jwts.builder()
                 .subject(email)
                 .claim("userId", userId)
+                .claim("role", normalizarRol(role))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getKey())
+                .signWith(getKey(), Jwts.SIG.HS256)
                 .compact();
     }
 
@@ -42,6 +45,10 @@ public class JwtUtil {
 
     public Long extraerUserId(String token) {
         return parsear(token).get("userId", Long.class);
+    }
+
+    public String extraerRol(String token) {
+        return parsear(token).get("role", String.class);
     }
 
     // Devuelve true si la firma es válida y el token no ha expirado
@@ -60,5 +67,14 @@ public class JwtUtil {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
+
+    private String normalizarRol(String role) {
+        if (role == null || role.isBlank()) {
+            return null;
+        }
+        String sinAcentos = Normalizer.normalize(role, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
+        return sinAcentos.toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]+", "_");
     }
 }

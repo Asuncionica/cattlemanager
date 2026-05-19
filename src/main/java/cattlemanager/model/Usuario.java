@@ -1,5 +1,6 @@
 package cattlemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Usuario {
     @Column(unique = true)//Evita que dos usuarios tengan el mismo login
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToOne
@@ -69,4 +71,3 @@ public class Usuario {
     }
     
 }
-
