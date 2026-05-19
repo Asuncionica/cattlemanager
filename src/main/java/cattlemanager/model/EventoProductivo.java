@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class EventoProductivo {
+public class EventoProductivo extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,4 +57,3 @@ public class EventoProductivo {
         this.animal = animal;
     }
 }
-

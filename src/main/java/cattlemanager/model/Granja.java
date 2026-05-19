@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 una relación muchos a uno con la entidad Usuario, ya que un usuario puede gestionar
 varias granjas.*/
 @Entity
-public class Granja {
+public class Granja extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,4 +63,3 @@ public class Granja {
         this.usuario = usuario;
     }
 }
-

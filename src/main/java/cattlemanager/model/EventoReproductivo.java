@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class EventoReproductivo {
+public class EventoReproductivo extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

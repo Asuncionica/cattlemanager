@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class EventoSanitario {
+public class EventoSanitario extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 // Representa las tareas asignadas a los peones de una granja
 @Entity
-public class Tarea {
+public class Tarea extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 // Alerta que encargado o peón envían al veterinario sobre un problema en un animal
 @Entity
-public class AlertaVeterinaria {
+public class AlertaVeterinaria extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
