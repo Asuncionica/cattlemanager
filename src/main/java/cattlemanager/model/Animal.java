@@ -1,5 +1,6 @@
 package cattlemanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,11 @@ public class Animal extends Auditable {
     @ManyToOne
     @JoinColumn(name = "granja_id")
     private Granja granja;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lote_genetico_id")
+    @JsonIgnoreProperties("animales")
+    private LoteGenetico loteGenetico;
 
     public Animal() {
     }
@@ -71,5 +77,13 @@ public class Animal extends Auditable {
 
     public void setGranja(Granja granja) {
         this.granja = granja;
+    }
+
+    public LoteGenetico getLoteGenetico() {
+        return loteGenetico;
+    }
+
+    public void setLoteGenetico(LoteGenetico loteGenetico) {
+        this.loteGenetico = loteGenetico;
     }
 }
