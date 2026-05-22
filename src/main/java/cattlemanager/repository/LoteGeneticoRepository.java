@@ -6,4 +6,5 @@ import cattlemanager.model.LoteGenetico;
 
 @Repository
 public interface LoteGeneticoRepository extends JpaRepository<LoteGenetico, Long> {
+    boolean existsByNombreIgnoreCase(String nombre);
 }

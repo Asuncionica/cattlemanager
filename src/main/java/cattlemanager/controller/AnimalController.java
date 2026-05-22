@@ -1,5 +1,6 @@
 package cattlemanager.controller;
 
+import cattlemanager.dto.AnimalRequestDto;
 import cattlemanager.model.Animal;
 import cattlemanager.service.AnimalService;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class AnimalController {
     }
 
     @PostMapping
-    public Animal crearAnimal(@RequestBody Animal animal) {
+    public Animal crearAnimal(@RequestBody AnimalRequestDto animal) {
         return animalService.guardarAnimal(animal);
     }
 
@@ -37,7 +38,7 @@ public class AnimalController {
     }
 
     @PutMapping("/{id}")
-    public Animal actualizarAnimal(@PathVariable Long id, @RequestBody Animal animal) {
+    public Animal actualizarAnimal(@PathVariable Long id, @RequestBody AnimalRequestDto animal) {
         return animalService.actualizarAnimal(id, animal);
     }
 }
