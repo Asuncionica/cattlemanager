@@ -28,7 +28,7 @@ public class LoteGenetico extends Auditable {
     private String descripcion;
 
     @OneToMany(mappedBy = "loteGenetico", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("loteGenetico")
+    @JsonIgnoreProperties({"loteGenetico", "granja", "hibernateLazyInitializer", "handler"})
     private List<Animal> animales;
 
     public LoteGenetico() {

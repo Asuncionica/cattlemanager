@@ -15,13 +15,14 @@ public class Animal extends Auditable {
     private String sexo;
     private String fechaNacimiento;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "granja_id")
+    @JsonIgnoreProperties({"animales", "hibernateLazyInitializer", "handler"})
     private Granja granja;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lote_genetico_id")
-    @JsonIgnoreProperties("animales")
+    @JsonIgnoreProperties({"animales", "hibernateLazyInitializer", "handler"})
     private LoteGenetico loteGenetico;
 
     public Animal() {

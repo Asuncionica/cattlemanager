@@ -45,8 +45,11 @@ public class AnimalService {
     }
 
     public Animal actualizarAnimal(Long id, AnimalRequestDto animalActualizado) {
-        Animal animal = animalRepository.findById(id).orElseThrow();
+        Animal animal = animalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Animal no encontrado con id: " + id));
+
         aplicarDatos(animal, animalActualizado);
+
         return animalRepository.save(animal);
     }
 
@@ -55,21 +58,29 @@ public class AnimalService {
         animal.setRaza(animalRequest.getRaza());
         animal.setSexo(animalRequest.getSexo());
         animal.setFechaNacimiento(animalRequest.getFechaNacimiento());
-        animal.setGranja(resolverGranja(animalRequest.getGranjaId()));
-        animal.setLoteGenetico(resolverLoteGenetico(animalRequest.getLoteId()));
+
+        Granja granja = resolverGranja(animalRequest.getGranjaId());
+        animal.setGranja(granja);
+
+        LoteGenetico loteGenetico = resolverLoteGenetico(animalRequest.getLoteId());
+        animal.setLoteGenetico(loteGenetico);
     }
 
     private Granja resolverGranja(Long granjaId) {
         if (granjaId == null) {
-            return null;
+            throw new RuntimeException("La granja es obligatoria");
         }
-        return granjaRepository.getReferenceById(granjaId);
+
+        return granjaRepository.findById(granjaId)
+                .orElseThrow(() -> new RuntimeException("Granja no encontrada con id: " + granjaId));
     }
 
     private LoteGenetico resolverLoteGenetico(Long loteId) {
         if (loteId == null) {
             return null;
         }
-        return loteGeneticoRepository.getReferenceById(loteId);
+
+        return loteGeneticoRepository.findById(loteId)
+                .orElseThrow(() -> new RuntimeException("Lote genético no encontrado con id: " + loteId));
     }
 }
