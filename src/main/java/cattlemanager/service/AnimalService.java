@@ -56,7 +56,7 @@ public class AnimalService {
     private void aplicarDatos(Animal animal, AnimalRequestDto animalRequest) {
         animal.setIdentificador(animalRequest.getIdentificador());
         animal.setRaza(animalRequest.getRaza());
-        animal.setSexo(animalRequest.getSexo());
+        animal.setSexo(animalRequest.getSexo() != null ? animalRequest.getSexo().toUpperCase() : null);
         animal.setFechaNacimiento(animalRequest.getFechaNacimiento());
 
         Granja granja = resolverGranja(animalRequest.getGranjaId());
