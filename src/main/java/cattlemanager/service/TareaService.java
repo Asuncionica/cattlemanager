@@ -23,9 +23,18 @@ public class TareaService {
         return tareaRepository.findByGranjaId(granjaId, pageable);
     }
 
-    // Filtra por granja y estado: útil para mostrar solo pendientes o solo completadas
     public Page<Tarea> obtenerPorGranjaYEstado(Long granjaId, boolean completada, Pageable pageable) {
         return tareaRepository.findByGranjaIdAndCompletada(granjaId, completada, pageable);
+    }
+
+    // NUEVO: obtener tareas asignadas a un peón
+    public Page<Tarea> obtenerPorPeon(Long peonId, Pageable pageable) {
+        return tareaRepository.findByPeonId(peonId, pageable);
+    }
+
+    // NUEVO: obtener tareas de un peón filtradas por estado
+    public Page<Tarea> obtenerPorPeonYEstado(Long peonId, boolean completada, Pageable pageable) {
+        return tareaRepository.findByPeonIdAndCompletada(peonId, completada, pageable);
     }
 
     public Tarea guardar(Tarea tarea) {
@@ -34,11 +43,14 @@ public class TareaService {
 
     public Tarea actualizar(Long id, Tarea tareaActualizada) {
         Tarea tarea = tareaRepository.findById(id).orElseThrow();
+
         tarea.setTitulo(tareaActualizada.getTitulo());
         tarea.setDescripcion(tareaActualizada.getDescripcion());
         tarea.setFechaVencimiento(tareaActualizada.getFechaVencimiento());
         tarea.setCompletada(tareaActualizada.isCompletada());
         tarea.setGranja(tareaActualizada.getGranja());
+        tarea.setPeon(tareaActualizada.getPeon());
+
         return tareaRepository.save(tarea);
     }
 

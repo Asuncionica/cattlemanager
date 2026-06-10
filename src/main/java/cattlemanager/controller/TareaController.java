@@ -22,7 +22,6 @@ public class TareaController {
         return tareaService.obtenerTareas(pageable);
     }
 
-    // Tareas de una granja; ?completada=false devuelve solo las pendientes
     @GetMapping("/granja/{granjaId}")
     public Page<Tarea> listarPorGranja(
             @PathVariable Long granjaId,
@@ -32,7 +31,22 @@ public class TareaController {
         if (completada != null) {
             return tareaService.obtenerPorGranjaYEstado(granjaId, completada, pageable);
         }
+
         return tareaService.obtenerPorGranja(granjaId, pageable);
+    }
+
+    // NUEVO: listar tareas asignadas a un peón
+    @GetMapping("/peon/{peonId}")
+    public Page<Tarea> listarPorPeon(
+            @PathVariable Long peonId,
+            @RequestParam(required = false) Boolean completada,
+            @PageableDefault(size = 20) Pageable pageable) {
+
+        if (completada != null) {
+            return tareaService.obtenerPorPeonYEstado(peonId, completada, pageable);
+        }
+
+        return tareaService.obtenerPorPeon(peonId, pageable);
     }
 
     @PostMapping
